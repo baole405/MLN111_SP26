@@ -4,29 +4,29 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Warm cream background */
+  /* Warm cream background - High-end aesthetic */
   --background: #fdfbf7;
-  --foreground: #333333;
+  --foreground: #1a1a1a;
 
-  /* Card styling */
+  /* Card styling - Clean white with subtle shadow */
   --card: #ffffff;
-  --card-foreground: #333333;
+  --card-foreground: #1a1a1a;
 
   --popover: #ffffff;
-  --popover-foreground: #333333;
+  --popover-foreground: #1a1a1a;
 
-  /* Deep Moss Green accent */
-  --primary: #2d4a3e;
+  /* Primary - Deep Moss Green (elegant, sophisticated) */
+  --primary: #1a4d2e;
   --primary-foreground: #fdfbf7;
 
   --secondary: #f5f0e8;
-  --secondary-foreground: #333333;
+  --secondary-foreground: #1a1a1a;
 
-  --muted: #f5f0e8;
-  --muted-foreground: #666666;
+  --muted: #e8e2d9;
+  --muted-foreground: #7a7a7a;
 
-  /* Accent - Deep Moss Green */
-  --accent: #2d4a3e;
+  /* Accent - Warm Gold/Bronze (luxury accent) */
+  --accent: #b8860b;
   --accent-foreground: #fdfbf7;
 
   --destructive: #dc2626;
@@ -34,7 +34,7 @@
 
   --border: #e8e2d9;
   --input: #e8e2d9;
-  --ring: #2d4a3e;
+  --ring: #1a4d2e;
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -160,4 +160,11 @@
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+.perspective {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
 }

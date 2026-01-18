@@ -1,9 +1,8 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
 import { useRef } from "react"
-import { ItCornerBox } from "./it-corner-box"
+import { useInView } from "framer-motion"
+import { LawZigzag } from "./law-zigzag"
 
 export function LawsSection() {
   const ref = useRef(null)
@@ -22,6 +21,12 @@ export function LawsSection() {
         "Trong bạn luôn có sự đấu tranh giữa 'ham muốn ăn ngon' và 'mong muốn khỏe mạnh'. Bạn muốn xem phim nhưng cũng muốn học bài. Chính việc giải quyết những mâu thuẫn này giúp bạn trưởng thành hơn mỗi ngày.",
       itNote:
         "Trade-off kinh điển trong kiến trúc phần mềm: Muốn hệ thống nhanh (Performance) thì phải chấp nhận tốn bộ nhớ (Memory). Muốn linh hoạt (Flexibility) thì code sẽ phức tạp hơn (Complexity). Đây là bản chất của System Design.",
+      images: [
+        {
+          src: "https://images.unsplash.com/photo-1690100690851-3ce8a5f64022?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          alt: "Fire Ice Abstract",
+        },
+      ],
     },
     {
       number: "02",
@@ -34,6 +39,12 @@ export function LawsSection() {
         "Bạn học tiếng Anh mỗi ngày 30 phút (tích lũy lượng). Ngày qua ngày có vẻ không khác biệt. Nhưng sau 1 năm, đột nhiên bạn nhận ra mình có thể xem phim không cần phụ đề (nhảy vọt về chất).",
       itNote:
         "Đây là nguyên lý đằng sau Machine Learning. Bạn cho model xem hàng triệu bức ảnh (tích lũy lượng). Đến một lúc, model 'chợt hiểu' và có thể nhận diện mèo với độ chính xác cao (nhảy vọt về chất).",
+      images: [
+        {
+          src: "https://images.unsplash.com/photo-1646775896376-62f6fb9b894e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          alt: "Last drop of water",
+        },
+      ],
     },
     {
       number: "03",
@@ -46,65 +57,29 @@ export function LawsSection() {
         "Hạt lúa (Khẳng định) → Cây lúa mọc lên, hạt lúa 'chết' đi (Phủ định 1) → Cây lúa cho ra nhiều hạt lúa mới (Phủ định 2). Vòng xoáy tiếp diễn, mỗi vòng là một sự phát triển.",
       itNote:
         "Đây là vòng đời của framework: jQuery (Khẳng định) → React ra đời, 'phủ định' jQuery (Phủ định 1). Nhưng React vẫn kế thừa tư tưởng component. Rồi sẽ có framework mới 'phủ định' React nhưng vẫn giữ lại những tinh hoa.",
+      images: [
+        {
+          src: "https://images.unsplash.com/photo-1692969952656-8f51d3132e23?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          alt: "",
+        },
+      ],
     },
   ]
 
   return (
-    <section className="py-24 px-6" ref={ref}>
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <span className="text-accent font-sans text-sm tracking-[0.2em] uppercase">Phần 3</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-foreground mt-4 mb-6">Ba Quy Luật Cơ Bản</h2>
+    <section id="laws" className="py-32 px-6 bg-secondary/30" ref={ref}>
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-24">
+          <span className="text-primary font-sans text-xs tracking-[0.4em] uppercase font-medium">Phần Cốt Lõi</span>
+          <h2 className="font-serif text-5xl md:text-6xl text-foreground mt-4 mb-6">Ba Quy Luật Cơ Bản</h2>
           <p className="font-serif text-xl text-muted-foreground italic max-w-2xl mx-auto">
-            Quy luật vận động và phát triển của thế giới
+            Quy luật vận động và phát triển của thế giới tự nhiên, xã hội và tư duy
           </p>
-        </motion.div>
+        </div>
 
-        <div className="space-y-16">
+        <div className="space-y-32">
           {laws.map((law, index) => (
-            <motion.div
-              key={law.number}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 + index * 0.15 }}
-            >
-              <div className="grid lg:grid-cols-[1fr,2fr] gap-8 items-start">
-                <div className="lg:sticky lg:top-8">
-                  <span className="font-serif text-6xl text-accent/30">{law.number}</span>
-                  <h3 className="font-serif text-2xl md:text-3xl text-foreground mt-2">{law.title}</h3>
-                  <p className="text-muted-foreground mt-2 font-sans text-sm">{law.subtitle}</p>
-                </div>
-
-                <div className="space-y-6">
-                  <blockquote className="border-l-4 border-accent pl-6 py-2">
-                    <p className="font-serif text-lg text-muted-foreground italic">"{law.quote}"</p>
-                  </blockquote>
-
-                  <div>
-                    <h4 className="font-sans text-sm font-medium text-accent uppercase tracking-wide mb-3">
-                      Định nghĩa
-                    </h4>
-                    <p className="text-muted-foreground leading-relaxed">{law.definition}</p>
-                  </div>
-
-                  <div className="bg-secondary/50 rounded-xl p-6">
-                    <h4 className="font-sans text-sm font-medium text-accent uppercase tracking-wide mb-3">
-                      Ví dụ đời sống
-                    </h4>
-                    <p className="text-foreground leading-relaxed">{law.lifeExample}</p>
-                  </div>
-
-                  <ItCornerBox>{law.itNote}</ItCornerBox>
-                </div>
-              </div>
-
-              {index < laws.length - 1 && <div className="border-b border-border mt-16" />}
-            </motion.div>
+            <LawZigzag key={law.number} {...law} isReversed={index === 1} />
           ))}
         </div>
       </div>
