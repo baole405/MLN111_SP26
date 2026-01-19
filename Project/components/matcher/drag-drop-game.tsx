@@ -1,5 +1,6 @@
 "use client";
 
+import { usePlayer } from "@/components/player-context";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { laws, matchItems, shuffleArray, type MatchItem } from "./matcher-data";
@@ -12,6 +13,7 @@ interface DroppedItem {
 }
 
 export function DragDropGame() {
+  const { addScore } = usePlayer();
   const [gameState, setGameState] = useState<GameState>("idle");
   const [availableItems, setAvailableItems] = useState<MatchItem[]>([]);
   const [droppedItems, setDroppedItems] = useState<
@@ -61,6 +63,7 @@ export function DragDropGame() {
     // Update score
     if (isCorrect) {
       setScore((prev) => prev + 1);
+      addScore(1); // +1 điểm vào tổng điểm
     }
 
     // Show feedback
