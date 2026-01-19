@@ -44,6 +44,12 @@ export function Header() {
             🎮 Trải Nghiệm
           </a>
           <a
+            href="#game"
+            className="font-sans text-sm text-primary font-medium hover:text-primary/80 transition-colors"
+          >
+            🎯 Quiz Game
+          </a>
+          <a
             href="#arena"
             className="font-sans text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
