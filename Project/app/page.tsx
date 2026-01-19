@@ -1,8 +1,8 @@
 import { ArenaSection } from "@/components/arena-section";
 import { CategoriesSection } from "@/components/categories-section";
 import { Footer } from "@/components/footer";
-import { GameSection } from "@/components/game";
-import { Header } from "@/components/header";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { HeroSection } from "@/components/hero-section";
 import { InteractiveSection } from "@/components/interactive";
 import { LawsSection } from "@/components/laws-section";
@@ -13,23 +13,28 @@ import { PrincipleSection } from "@/components/principle-section";
 
 export default function Home() {
   return (
-    <div className="bg-background">
-      <Header />
-      <main className="min-h-screen">
-        <HeroSection />
-        <div id="overview">
-          <OverviewSection />
+    <SidebarProvider defaultOpen={false}>
+      <AppSidebar />
+      <SidebarInset>
+        <div className="bg-background">
+
+
+          <main className="min-h-screen">
+            <HeroSection />
+            <div id="overview">
+              <OverviewSection />
+            </div>
+            <PrincipleSection />
+            <LawsSection />
+            <CategoriesSection />
+            <InteractiveSection />
+            <MatcherSection />
+            <ArenaSection />
+            <MindMapSection />
+            <Footer />
+          </main>
         </div>
-        <PrincipleSection />
-        <LawsSection />
-        <CategoriesSection />
-        <InteractiveSection />
-        <GameSection />
-        <MatcherSection />
-        <ArenaSection />
-        <MindMapSection />
-        <Footer />
-      </main>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
