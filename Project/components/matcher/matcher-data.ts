@@ -16,25 +16,25 @@ export const laws: LawTarget[] = [
     id: "luong-chat",
     name: "Quy Luật Lượng - Chất",
     shortName: "Lượng → Chất",
-    color: "from-blue-500 to-cyan-500",
+    color: "bg-amber-700",
   },
   {
     id: "mau-thuan",
     name: "Quy Luật Mâu Thuẫn",
     shortName: "Mâu Thuẫn",
-    color: "from-red-500 to-orange-500",
+    color: "bg-amber-800",
   },
   {
     id: "phu-dinh",
     name: "Quy Luật Phủ Định của Phủ Định",
     shortName: "Phủ Định²",
-    color: "from-purple-500 to-pink-500",
+    color: "bg-amber-900",
   },
   {
     id: "lien-he",
     name: "Nguyên Lý Mối Liên Hệ Phổ Biến",
     shortName: "Liên Hệ",
-    color: "from-green-500 to-emerald-500",
+    color: "bg-stone-600",
   },
 ];
 
