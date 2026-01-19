@@ -31,6 +31,10 @@ export function Header() {
           <a href="#mind-map" className="font-sans text-sm text-muted-foreground hover:text-foreground transition-colors">
             Mind Map
           </a>
+          <Link href="/chat" className="font-sans font-bold text-sm text-[#2d4a3e] hover:text-foreground transition-colors"
+          >
+            Đối Thoại về Triết Học
+          </Link>
         </div>
       </nav>
     </motion.header>
