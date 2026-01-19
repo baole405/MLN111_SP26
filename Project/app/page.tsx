@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero-section";
 import { InteractiveSection } from "@/components/interactive";
 import { LawsSection } from "@/components/laws-section";
+import { MatcherSection } from "@/components/matcher";
 import { MindMapSection } from "@/components/mindmap-section";
 import { OverviewSection } from "@/components/overview-section";
 import { PrincipleSection } from "@/components/principle-section";
@@ -24,6 +25,7 @@ export default function Home() {
         <CategoriesSection />
         <InteractiveSection />
         <GameSection />
+        <MatcherSection />
         <ArenaSection />
         <MindMapSection />
         <Footer />
