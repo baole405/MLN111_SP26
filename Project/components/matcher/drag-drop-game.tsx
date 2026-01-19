@@ -199,14 +199,14 @@ export function DragDropGame() {
               ${
                 showFeedback?.lawId === law.id
                   ? showFeedback.isCorrect
-                    ? "border-green-500 bg-green-500/10"
-                    : "border-red-500 bg-red-500/10"
+                    ? "border-amber-600 bg-amber-600/10"
+                    : "border-stone-500 bg-stone-500/10"
                   : ""
               }`}
           >
             {/* Law header */}
             <div
-              className={`inline-block px-3 py-1 rounded-full text-white text-sm font-medium mb-3 bg-gradient-to-r ${law.color}`}
+              className={`inline-block px-3 py-1 rounded-full text-white text-sm font-medium mb-3 ${law.color}`}
             >
               {law.shortName}
             </div>
@@ -221,8 +221,8 @@ export function DragDropGame() {
                   animate={{ opacity: 1, x: 0 }}
                   className={`px-3 py-2 rounded-lg text-sm ${
                     isCorrect
-                      ? "bg-green-500/20 text-green-400 border border-green-500/50"
-                      : "bg-red-500/20 text-red-400 border border-red-500/50"
+                      ? "bg-amber-700/20 text-amber-600 border border-amber-600/50"
+                      : "bg-stone-500/20 text-stone-500 border border-stone-500/50"
                   }`}
                 >
                   {isCorrect ? "✓" : "✗"} {item.text}
