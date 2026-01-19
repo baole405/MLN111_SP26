@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { ScoreDisplay } from "./score-display";
 
 export function Header() {
   return (
@@ -12,12 +13,15 @@ export function Header() {
       className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50"
     >
       <nav className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-        <Link
-          href="#"
-          className="font-serif text-xl font-semibold text-foreground"
-        >
-          MÃ NGUỒN CỦA THỰC TẠI
-        </Link>
+        <div className="flex items-center gap-6">
+          <Link
+            href="#"
+            className="font-serif text-xl font-semibold text-foreground"
+          >
+            MÃ NGUỒN CỦA THỰC TẠI
+          </Link>
+          <ScoreDisplay />
+        </div>
         <div className="flex items-center gap-8">
           <a
             href="#overview"

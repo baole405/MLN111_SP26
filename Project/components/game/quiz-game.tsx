@@ -1,5 +1,6 @@
 "use client";
 
+import { usePlayer } from "@/components/player-context";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import Confetti from "./confetti";
@@ -8,6 +9,7 @@ import { quizQuestions, type QuizQuestion } from "./quiz-data";
 type GameState = "idle" | "playing" | "answered" | "finished";
 
 export function QuizGame() {
+  const { addScore } = usePlayer();
   const [gameState, setGameState] = useState<GameState>("idle");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -61,6 +63,7 @@ export function QuizGame() {
 
     if (answerIndex === currentQuestion.correctAnswer) {
       setScore((prev) => prev + 1);
+      addScore(2); // +2 điểm vào tổng điểm
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 2000);
     }
