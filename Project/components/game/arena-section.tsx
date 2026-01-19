@@ -1,11 +1,14 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { QuizGame } from "./quiz-game"
+import { motion } from "framer-motion";
+import { QuizGame } from "./quiz-game";
 
 export function GameSection() {
   return (
-    <section id="game" className="py-24 px-6 bg-gradient-to-b from-background to-secondary/30">
+    <section
+      id="game"
+      className="py-24 px-6 bg-gradient-to-b from-background to-secondary/30"
+    >
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <motion.div
@@ -22,8 +25,9 @@ export function GameSection() {
             🎮 Đấu Trường Triết Học
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Kiểm tra kiến thức của bạn qua các câu hỏi tình huống thực tế. 
-            Trả lời đúng để ghi điểm và nhận <span className="text-primary">pháo hoa</span>! 🎉
+            Kiểm tra kiến thức của bạn qua các câu hỏi tình huống thực tế. Trả
+            lời đúng để ghi điểm và nhận{" "}
+            <span className="text-primary">pháo hoa</span>! 🎉
           </p>
         </motion.div>
 
@@ -51,5 +55,5 @@ export function GameSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

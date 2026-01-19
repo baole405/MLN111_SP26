@@ -23,8 +23,9 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [playerName, setPlayerNameState] = useState("");
   const [totalScore, setTotalScore] = useState(0);
   const [isNameSet, setIsNameSet] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  // Load from localStorage on mount
+  // Load from localStorage on mount (client-side only)
   useEffect(() => {
     const savedName = localStorage.getItem("playerName");
     const savedScore = localStorage.getItem("totalScore");
@@ -36,15 +37,20 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     if (savedScore) {
       setTotalScore(parseInt(savedScore, 10));
     }
+
+    // Mark as hydrated after reading localStorage
+    setIsHydrated(true);
   }, []);
 
-  // Save to localStorage when changed
+  // Save to localStorage when changed (client-side only)
   useEffect(() => {
+    if (!isHydrated) return;
+
     if (playerName) {
       localStorage.setItem("playerName", playerName);
     }
     localStorage.setItem("totalScore", totalScore.toString());
-  }, [playerName, totalScore]);
+  }, [playerName, totalScore, isHydrated]);
 
   const setPlayerName = (name: string) => {
     setPlayerNameState(name);
@@ -64,6 +70,24 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setTotalScore(0);
     localStorage.setItem("totalScore", "0");
   };
+
+  // Prevent hydration mismatch by not rendering until client-side
+  if (!isHydrated) {
+    return (
+      <PlayerContext.Provider
+        value={{
+          playerName: "",
+          setPlayerName: () => {},
+          totalScore: 0,
+          addScore: () => {},
+          resetScore: () => {},
+          isNameSet: false,
+        }}
+      >
+        {children}
+      </PlayerContext.Provider>
+    );
+  }
 
   return (
     <PlayerContext.Provider
