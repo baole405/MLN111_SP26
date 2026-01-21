@@ -177,7 +177,7 @@ function extractAllText(jj: any) {
 }
 
 export async function POST(req: Request) {
-  const { message } = await req.json()
+  const { message, history } = await req.json()
   if (!message) return NextResponse.json({ error: 'no message' }, { status: 400 })
   
   // Load embeddings file if present
@@ -202,26 +202,33 @@ Response structure:
 4. Make sure each paragraph flows naturally - don't just list facts
 
 Write 3-4 short paragraphs total. Be thoughtful and engaging, not just informational.`
+    // incorporate recent conversation history (if any)
+    const convo = (history && Array.isArray(history) && history.length)
+      ? history.map((m: any) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.text}`).join('\n')
+      : ''
+    const convoPrefix = convo ? `Conversation:\n${convo}\n\n` : ''
+    const userPrompt = `${convoPrefix}Question: ${message}`
+
     // Use documented GenerateContentRequest shape: place system instruction in `systemInstruction`
     const body = {
       systemInstruction: { parts: [{ text: system }] },
       contents: [
-        { parts: [{ text: message }] }
+        { parts: [{ text: userPrompt }] }
       ],
       generationConfig: { temperature: 1.0, maxOutputTokens: 4096 }
     }
     if (!process.env.GOOGLE_API_KEY) return NextResponse.json({ error: 'GOOGLE_API_KEY not set' }, { status: 500 })
     const key = process.env.GOOGLE_API_KEY
-    const genUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${key}`
+    const genUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${key}`
     // Try multiple request shapes for generation (some APIs accept different schemas)
     const genCandidates = [
       body,
       // alternate simple shapes (kept for robustness) — prefer `systemInstruction` + `contents`
-      { systemInstruction: { parts: [{ text: system }] }, contents: [{ parts: [{ text: message }] }], generationConfig: { temperature: 0.8, maxOutputTokens: 4096 } },
-      { contents: [{ parts: [{ text: message }] }], generationConfig: { temperature: 0.2 } },
-      { prompt: { text: message }, temperature: 0.2 },
-      { input: message, temperature: 0.2 },
-      { text: message, temperature: 0.2 }
+      { systemInstruction: { parts: [{ text: system }] }, contents: [{ parts: [{ text: userPrompt }] }], generationConfig: { temperature: 0.8, maxOutputTokens: 4096 } },
+      { contents: [{ parts: [{ text: userPrompt }] }], generationConfig: { temperature: 0.2 } },
+      { prompt: { text: userPrompt }, temperature: 0.2 },
+      { input: userPrompt, temperature: 0.2 },
+      { text: userPrompt, temperature: 0.2 }
     ]
     let lastErr = ''
     for (const candidate of genCandidates) {
@@ -264,7 +271,7 @@ Write 3-4 short paragraphs total. Be thoughtful and engaging, not just informati
     if (!process.env.GOOGLE_API_KEY) return NextResponse.json({ error: 'GOOGLE_API_KEY not set' }, { status: 500 })
     try {
       const key = process.env.GOOGLE_API_KEY
-      const genUrlFallback = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${key}`
+      const genUrlFallback = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${key}`
       const systemFallback = `You are a Marxism-Leninism expert assistant. Answer in clear, natural Vietnamese with logical flow.
 
 Response structure:
@@ -274,9 +281,15 @@ Response structure:
 4. Make sure each paragraph flows naturally - don't just list facts
 
 Write 3-4 short paragraphs total. Be thoughtful and engaging, not just informational.`
+      const convo2 = (history && Array.isArray(history) && history.length)
+        ? history.map((m: any) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.text}`).join('\n')
+        : ''
+      const convoPrefix2 = convo2 ? `Conversation:\n${convo2}\n\n` : ''
+      const userPrompt2 = `${convoPrefix2}Question: ${message}`
+
       const genBody = {
         systemInstruction: { parts: [{ text: systemFallback }] },
-        contents: [{ parts: [{ text: message }] }],
+        contents: [{ parts: [{ text: userPrompt2 }] }],
         generationConfig: { temperature: 1.0, maxOutputTokens: 4096 }
       }
       const r = await fetch(genUrlFallback, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(genBody) })
@@ -306,11 +319,17 @@ How to answer:
 
 Textbook materials for reference:
 ${contextText}`
-  const userPrompt = `Question: ${message}`
+  const userPrompt = (() => {
+    const convo3 = (history && Array.isArray(history) && history.length)
+      ? history.map((m: any) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.text}`).join('\n')
+      : ''
+    const convoPrefix3 = convo3 ? `Conversation:\n${convo3}\n\n` : ''
+    return `${convoPrefix3}Question: ${message}`
+  })()
 
   if (!process.env.GOOGLE_API_KEY) return NextResponse.json({ error: 'GOOGLE_API_KEY not set' }, { status: 500 })
   const key = process.env.GOOGLE_API_KEY
-  const genUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${key}`
+  const genUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${key}`
   const body = {
     systemInstruction: { parts: [{ text: system }] },
     contents: [

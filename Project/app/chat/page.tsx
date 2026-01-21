@@ -65,7 +65,9 @@ export default function ChatPage() {
     setInput('')
     setLoading(true)
     try {
-      const res = await fetch('/api/chat', { method: 'POST', body: JSON.stringify({ message: text }), headers: { 'Content-Type': 'application/json' } })
+      // send recent history (last 6 messages) so server can handle follow-up Qs
+      const historyToSend = [...messages, userMsg].slice(-6).map(m => ({ role: m.role, text: m.text }))
+      const res = await fetch('/api/chat', { method: 'POST', body: JSON.stringify({ message: text, history: historyToSend }), headers: { 'Content-Type': 'application/json' } })
       const txt = await res.text()
       let j: any = null
       try { j = JSON.parse(txt) } catch (err) { j = null }
